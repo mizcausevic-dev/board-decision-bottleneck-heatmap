@@ -1,4 +1,5 @@
 import express from "express";
+import { pathToFileURL } from "node:url";
 import { bottleneckRegister, dragPressure, hotspotClusters, ownerConcentration, payload, summary, verification } from "./services/verticalBriefService.js";
 import {
   renderBottleneckOverview,
@@ -31,10 +32,13 @@ export function createApp() {
   return app;
 }
 
-/* c8 ignore next 5 */
-if (process.argv[1] && import.meta.url === new URL(`file://${process.argv[1].replace(/\\/g, "/")}`).href) {
+const isEntrypoint = process.argv[1] ? import.meta.url === pathToFileURL(process.argv[1]).href : false;
+
+/* v8 ignore start -- process entrypoint is exercised by deployment smoke checks, not unit coverage. */
+if (isEntrypoint) {
   const port = Number(process.env.PORT ?? 4318);
   createApp().listen(port, () => {
     console.log(`board-decision-bottleneck-heatmap listening on http://127.0.0.1:${port}`);
   });
 }
+/* v8 ignore stop */

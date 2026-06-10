@@ -13,6 +13,14 @@ describe("render", () => {
     expect(renderBottleneckOverview()).toContain("Board Decision Bottleneck Heatmap");
   });
 
+  it("renders product-depth and suite context in the overview", () => {
+    const html = renderBottleneckOverview();
+    expect(html).toContain("Product depth");
+    expect(html).toContain("What these repos have in common");
+    expect(html).toContain("https://portfolio.kineticgain.com/");
+    expect(html).toContain("https://suite.kineticgain.com/");
+  });
+
   it("renders the bottleneck register route", () => {
     expect(renderBottleneckRegister()).toContain("/bottleneck-register");
   });
@@ -31,5 +39,11 @@ describe("render", () => {
 
   it("renders docs payload guidance", () => {
     expect(renderDocs()).toContain("/api/payload");
+  });
+
+  it("renders docs with shared positioning", () => {
+    const html = renderDocs();
+    expect(html).toContain("Product depth");
+    expect(html).toContain("What these repos have in common");
   });
 });

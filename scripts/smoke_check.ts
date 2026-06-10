@@ -29,6 +29,12 @@ try {
     const response = await check(route);
     const body = await response.text();
     assert.match(body, /Board Decision Bottleneck Heatmap|Bottleneck register|Hotspot clusters|Owner concentration/);
+    assert.match(body, /portfolio\.kineticgain\.com/);
+    if (route === "/" || route === "/docs") {
+      assert.match(body, /Product depth/);
+      assert.match(body, /What these repos have in common/);
+      assert.match(body, /suite\.kineticgain\.com/);
+    }
   }
 
   for (const route of apiRoutes) {

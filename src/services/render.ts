@@ -42,6 +42,9 @@ function shell(title: string, body: string, description: string) {
       .grid { grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); }
       .card h3,.aside h3 { margin:12px 0 10px; font-size:30px; line-height:1.05; }
       .card p,.aside p, li { color:var(--muted); line-height:1.6; }
+      .callout { border-left:4px solid var(--accent); }
+      .proof-list { display:grid; gap:12px; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); padding:0; list-style:none; }
+      .proof-list li { padding:14px; border:1px solid rgba(125,196,255,.12); border-radius:18px; background:rgba(7,17,29,.52); }
       .table-wrap { overflow-x:auto; }
       table { width:100%; border-collapse:collapse; }
       th,td { text-align:left; padding:12px; border-bottom:1px solid rgba(125,196,255,.12); vertical-align:top; }
@@ -58,6 +61,9 @@ function shell(title: string, body: string, description: string) {
       <div class="footer">
         <span>${productTitle}</span>
         <a href="${domain}">${domain.replace("https://", "")}</a>
+        <a href="https://portfolio.kineticgain.com/">Portfolio</a>
+        <a href="https://suite.kineticgain.com/">Suite</a>
+        <a href="https://github.com/mizcausevic-dev/board-decision-bottleneck-heatmap">board-decision-bottleneck-heatmap</a>
         <a href="https://github.com/mizcausevic-dev/">GitHub</a>
         <a href="https://www.linkedin.com/in/mirzacausevic/">LinkedIn</a>
         <a href="https://kineticgain.com/">Kinetic Gain</a>
@@ -78,6 +84,34 @@ function navLinks(path: string) {
   ]
     .map(([href, label]) => `<a${href === path ? ' class="active"' : ""} href="${href}">${label}</a>`)
     .join("");
+}
+
+function renderProductDepth() {
+  return `<section class="section callout">
+    <span class="eyebrow">Product depth</span>
+    <h2>Board bottlenecks need an operating diagnosis, not a status rollup.</h2>
+    <p class="lede">This product is built for leaders who need to distinguish normal review discipline from execution drag that is quietly consuming margin, launch confidence, and investor trust. It ties every hotspot to a lane, owner, audience, bottleneck kind, value at stake, and next intervention.</p>
+    <ul class="proof-list">
+      <li><strong>Executive view.</strong> Converts review queues, handoffs, stale evidence, and owner overload into a board-readable heat tier.</li>
+      <li><strong>Operator view.</strong> Shows the specific remediation motion: rebalance ownership, refresh evidence, standardize approval rules, or escalate the threshold conflict.</li>
+      <li><strong>Investor view.</strong> Makes execution quality visible as a repeatable operating system instead of a founder-dependent explanation.</li>
+      <li><strong>Revenue view.</strong> Connects bottlenecks to recoverable value, launch slippage, and the cost of delayed decisions.</li>
+    </ul>
+  </section>`;
+}
+
+function renderSharedPattern() {
+  return `<section class="section">
+    <span class="eyebrow">What these repos have in common</span>
+    <h2>One Kinetic Gain pattern: turn operating ambiguity into decision evidence.</h2>
+    <p class="lede">Each repo in this lane packages a synthetic but realistic dataset, deterministic scoring logic, board-readable routes, API payloads, static deploy output, verification notes, screenshots, and safe-use boundaries. The point is not to show another dashboard. The point is to show how Kinetic Gain turns AI, platform, compliance, security, revenue, and regulated-infrastructure complexity into decisions leaders can defend.</p>
+    <ul class="proof-list">
+      <li><strong>Reusable data contract.</strong> Every lane can be reviewed as JSON, CLI output, and static HTML.</li>
+      <li><strong>Buyer-readable packaging.</strong> Pages explain the job-to-be-done for non-technical and technical readers.</li>
+      <li><strong>Verification layer.</strong> Synthetic assumptions and safety boundaries stay visible instead of being hidden behind polish.</li>
+      <li><strong>Portfolio interlinking.</strong> Surfaces point back to the broader estate at portfolio.kineticgain.com and suite.kineticgain.com.</li>
+    </ul>
+  </section>`;
 }
 
 export function renderBottleneckOverview() {
@@ -138,7 +172,9 @@ export function renderBottleneckOverview() {
     <section class="section">
       <h2>Board-visible drag pressure</h2>
       <ul>${risks}</ul>
-    </section>`,
+    </section>
+    ${renderProductDepth()}
+    ${renderSharedPattern()}`,
     "Board-ready hotspot map for exposing review drag, handoff pressure, owner concentration, and threshold bottlenecks."
   );
 }
@@ -153,7 +189,7 @@ export function renderBottleneckRegister() {
 
   return shell(
     "Bottleneck register",
-    `<section class="hero"><span class="eyebrow">Bottleneck register</span><h1>Each lane keeps one heat tier, one owner, one audience, and one next move tied to the same bottleneck.</h1><p class="lede">The register keeps each hotspot visible before it turns into another generic board update about “complexity.”</p><div class="nav">${navLinks("/bottleneck-register")}</div></section><section class="section table-wrap"><table><thead><tr><th>Lane</th><th>Heat</th><th>Owner</th><th>Audience</th><th>Kind</th><th>Theme</th><th>Intensity</th></tr></thead><tbody>${rows}</tbody></table></section>`,
+    `<section class="hero"><span class="eyebrow">Bottleneck register</span><h1>Each lane keeps one heat tier, one owner, one audience, and one next move tied to the same bottleneck.</h1><p class="lede">The register keeps each hotspot visible before it turns into another generic board update about "complexity."</p><div class="nav">${navLinks("/bottleneck-register")}</div></section><section class="section table-wrap"><table><thead><tr><th>Lane</th><th>Heat</th><th>Owner</th><th>Audience</th><th>Kind</th><th>Theme</th><th>Intensity</th></tr></thead><tbody>${rows}</tbody></table></section>`,
     "Register view showing which board-decision lanes are hottest and why."
   );
 }
@@ -200,7 +236,7 @@ export function renderVerification() {
 export function renderDocs() {
   return shell(
     "Docs",
-    `<section class="hero"><span class="eyebrow">Docs</span><h1>Board Decision Bottleneck Heatmap docs</h1><p class="lede">This surface packages queue drag, handoff pressure, owner concentration, freshness drift, and decision latency into reproducible routes and JSON outputs for board and investor reviews.</p><div class="nav">${navLinks("/docs")}</div></section><section class="section"><ul><li><code>/bottleneck-register</code> keeps heat tiers, owners, audiences, and next moves tied to one hotspot lane.</li><li><code>/hotspot-clusters</code> compares queue drag, handoff pressure, latency, and intensity across lanes.</li><li><code>/owner-concentration</code> isolates the choke points where one owner carries too much final decision weight.</li><li><code>/api/payload</code> exposes the reproducible bottleneck packet.</li></ul></section>`,
+    `<section class="hero"><span class="eyebrow">Docs</span><h1>Board Decision Bottleneck Heatmap docs</h1><p class="lede">This surface packages queue drag, handoff pressure, owner concentration, freshness drift, and decision latency into reproducible routes and JSON outputs for board and investor reviews.</p><div class="nav">${navLinks("/docs")}</div></section><section class="section"><ul><li><code>/bottleneck-register</code> keeps heat tiers, owners, audiences, and next moves tied to one hotspot lane.</li><li><code>/hotspot-clusters</code> compares queue drag, handoff pressure, latency, and intensity across lanes.</li><li><code>/owner-concentration</code> isolates the choke points where one owner carries too much final decision weight.</li><li><code>/api/payload</code> exposes the reproducible bottleneck packet.</li></ul></section>${renderProductDepth()}${renderSharedPattern()}`,
     "Product documentation for Board Decision Bottleneck Heatmap and its board-facing hotspot routes."
   );
 }
